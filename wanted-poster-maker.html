@@ -134,7 +134,7 @@
     text-align:center;
     margin-top:2px;
   }
-  #fileInput{display:none;}
+  #cameraInput, #galleryInput{display:none;}
   .status{
     font-size:0.8rem;
     text-align:center;
@@ -155,9 +155,11 @@
 </div>
 
 <div class="controls">
-  <input type="file" id="fileInput" accept="image/*" capture="user">
+  <input type="file" id="cameraInput" accept="image/*" capture="user">
+  <input type="file" id="galleryInput" accept="image/*">
   <div class="row">
-    <button id="pickBtn" class="primary">Take / Upload Photo</button>
+    <button id="cameraBtn" class="primary">Take Photo</button>
+    <button id="galleryBtn">Choose from Gallery</button>
   </div>
 
   <div class="zoom-row" id="zoomRow" style="display:none;">
@@ -187,8 +189,10 @@
 
   var stage = document.getElementById('stage');
   var emptyHint = document.getElementById('emptyHint');
-  var fileInput = document.getElementById('fileInput');
-  var pickBtn = document.getElementById('pickBtn');
+  var cameraInput = document.getElementById('cameraInput');
+  var galleryInput = document.getElementById('galleryInput');
+  var cameraBtn = document.getElementById('cameraBtn');
+  var galleryBtn = document.getElementById('galleryBtn');
   var zoomRow = document.getElementById('zoomRow');
   var zoomSlider = document.getElementById('zoomSlider');
   var dragHint = document.getElementById('dragHint');
@@ -265,11 +269,18 @@
     reader.readAsDataURL(file);
   }
 
-  pickBtn.addEventListener('click', function(){ fileInput.click(); });
-  fileInput.addEventListener('change', function(e){
+  cameraBtn.addEventListener('click', function(){ cameraInput.click(); });
+  galleryBtn.addEventListener('click', function(){ galleryInput.click(); });
+
+  cameraInput.addEventListener('change', function(e){
     var f = e.target.files && e.target.files[0];
     if(f) loadPhoto(f);
-    fileInput.value = '';
+    cameraInput.value = '';
+  });
+  galleryInput.addEventListener('change', function(e){
+    var f = e.target.files && e.target.files[0];
+    if(f) loadPhoto(f);
+    galleryInput.value = '';
   });
 
   resetBtn.addEventListener('click', function(){
